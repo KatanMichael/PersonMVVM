@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.michael.personmvvm.interfaces.RequestListener
 import com.michael.personmvvm.model.Person
 import com.michael.personmvvm.model.PersonViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,8 +62,35 @@ class MainActivity : AppCompatActivity()
                 personViewModel!!.deleteAllPeople()
             }
 
+        }
+
+        searchByAgeBtn.setOnClickListener{
+
+            var age  = searchByAgeEt.text.toString().toInt()
+            val allPeopleAboveAge = personViewModel?.getAllPeopleAboveAge(age,
+                object: RequestListener{
+                    override fun <T> onComplete(t: T)
+                    {
+                        val allPeople = t as List<Person>
+
+                        if(allPeople != null)
+                        {
+                           for(p in allPeople)
+                           {
+                               Log.d("PersonList",p.toString())
+                           }
+                        }else
+                        {
+                            Log.d("PersonList","allPeople is null")
+                        }
+                    }
+
+
+                })
+
 
 
         }
+
     }
 }

@@ -3,6 +3,7 @@ package com.michael.personmvvm.db
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.michael.personmvvm.interfaces.PersonDAO
+import com.michael.personmvvm.interfaces.RequestListener
 import com.michael.personmvvm.model.Person
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,9 +44,13 @@ class PersonRepository(application: Application)
         return allPeople;
     }
 
-    fun getAllPeopleAboveAge(age: Int) : List<Person>?
+    fun getAllPeopleAboveAge(age: Int, requestListener: RequestListener)
     {
-        return personDao.getAllPeopleAboveAge(age)
+
+        GlobalScope.launch {
+             val allPeopleAboveAge = personDao.getAllPeopleAboveAge(age)
+            requestListener.onComplete(allPeopleAboveAge)
+        }
 
 
     }

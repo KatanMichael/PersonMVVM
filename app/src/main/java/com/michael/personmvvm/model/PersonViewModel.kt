@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.michael.personmvvm.db.PersonRepository
+import com.michael.personmvvm.interfaces.RequestListener
 
 class PersonViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -26,8 +27,15 @@ class PersonViewModel(application: Application) : AndroidViewModel(application)
         return allPeople
     }
 
-    fun getAllPeopleAboveAge(age: Int): List<Person>?
+    fun getAllPeopleAboveAge(age: Int, requestListener: RequestListener)
     {
-        return repository.getAllPeopleAboveAge(age)
+        return repository.getAllPeopleAboveAge(age, object : RequestListener{
+            override fun <T> onComplete(t: T)
+            {
+                requestListener.onComplete(t)
+            }
+
+
+        })
     }
 }
