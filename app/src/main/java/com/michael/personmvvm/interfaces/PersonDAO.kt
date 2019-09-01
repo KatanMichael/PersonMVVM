@@ -1,5 +1,6 @@
 package com.michael.personmvvm.interfaces
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -16,5 +17,9 @@ interface PersonDAO
     fun deleteAllPeople()
 
     @Query("SELECT * FROM person_table")
-    fun getAllPeople
+    fun getAllPeople() : LiveData<List<Person>>
+
+    @Query("SELECT * FROM person_table WHERE age > :inputAge")
+    fun getAllPeopleAboveAge(inputAge: Int) : List<Person>
+
 }

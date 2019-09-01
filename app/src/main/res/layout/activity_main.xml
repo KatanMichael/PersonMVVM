@@ -44,5 +44,17 @@
         android:id="@+id/logAllPoepleBtn"
         />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter minimum age to query"
+        android:id="@+id/searchByAgeEt"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search By Age"
+        android:id="@+id/searchByAgeBtn"
+        />
+
 
 </LinearLayout>
