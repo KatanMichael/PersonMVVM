@@ -38,14 +38,27 @@ class MainActivity : AppCompatActivity()
             }
         })
 
+        personViewModel!!.getLastPerson()?.observe(this, Observer<String>
+        {
+            lastPersonNameTv.text = it.toString()
+        })
+
         enterPersonBtn.setOnClickListener {
             val name = enterPersonNameET.text.toString()
-            val age = enterPersonAgeET.text.toString().toInt()
+            val age =
+                try {
+                    enterPersonAgeET.text.toString().toInt()
+                }catch (e: NumberFormatException)
+                {
+                    0
+                }
+
+
 
             val tempPerson = Person(name,age)
 
             personViewModel!!.insertPerson(tempPerson)
-
+            personViewModel!!.setLastPerson(tempPerson.name)
             enterPersonNameET.setText("")
             enterPersonAgeET.setText("")
         }
